@@ -23,7 +23,7 @@ class QuenMatKhau extends Mailable
     }
     public function build()
     {
-        return $this->subject("Lấy lại mật khẩu DZ FULLSTACK 16")
+        return $this->subject("Lấy lại mật khẩu ")
             ->view('mail_quen_mat_khau', ['hash_reset' => $this->hash_reset, 'name' => $this->name]);
     }
 }
