@@ -77,18 +77,18 @@ class DonHangController extends Controller
         $dai_ly = Auth::guard('sanctum')->user();
 
         $data = ChiTietDonHang::join('san_phams', 'san_phams.id', 'chi_tiet_don_hangs.id_san_pham')
-                              ->join('don_hangs', 'don_hangs.id', 'chi_tiet_don_hangs.id_hoa_don')
-                              ->where('san_phams.id_dai_ly', $dai_ly->id)
-                              ->select(
-                                    'don_hangs.*',
-                                    'chi_tiet_don_hangs.id as id_chi_tiet',
-                                    'chi_tiet_don_hangs.is_giao_kho',
-                                    'san_phams.ten_san_pham',
-                                    'chi_tiet_don_hangs.so_luong',
-                                    'chi_tiet_don_hangs.don_gia',
-                                    'chi_tiet_don_hangs.thanh_tien',
-                                )
-                              ->get();
+            ->join('don_hangs', 'don_hangs.id', 'chi_tiet_don_hangs.id_hoa_don')
+            ->where('san_phams.id_dai_ly', $dai_ly->id)
+            ->select(
+                'don_hangs.*',
+                'chi_tiet_don_hangs.id as id_chi_tiet',
+                'chi_tiet_don_hangs.is_giao_kho',
+                'san_phams.ten_san_pham',
+                'chi_tiet_don_hangs.so_luong',
+                'chi_tiet_don_hangs.don_gia',
+                'chi_tiet_don_hangs.thanh_tien',
+            )
+            ->get();
 
         return response()->json([
             'data' => $data
@@ -99,12 +99,12 @@ class DonHangController extends Controller
     {
         $dai_ly = Auth::guard('sanctum')->user();
         $chi_tiet_don_hang = ChiTietDonHang::where('chi_tiet_don_hangs.id', $request->id_chi_tiet)
-                                           ->join('san_phams', 'san_phams.id', 'chi_tiet_don_hangs.id_san_pham')
-                                           ->where('san_phams.id_dai_ly', $dai_ly->id)
-                                           ->select('chi_tiet_don_hangs.*')
-                                           ->first();
+            ->join('san_phams', 'san_phams.id', 'chi_tiet_don_hangs.id_san_pham')
+            ->where('san_phams.id_dai_ly', $dai_ly->id)
+            ->select('chi_tiet_don_hangs.*')
+            ->first();
 
-        if($chi_tiet_don_hang) {
+        if ($chi_tiet_don_hang) {
             $chi_tiet_don_hang->is_giao_kho = 1;
             $chi_tiet_don_hang->save();
 
@@ -132,10 +132,10 @@ class DonHangController extends Controller
     public function adminDataChiTietDonHang(Request $request)
     {
         $data = ChiTietDonHang::join('san_phams', 'san_phams.id', 'chi_tiet_don_hangs.id_san_pham')
-                              ->join('dai_lys', 'dai_lys.id', 'san_phams.id_dai_ly')
-                              ->where('chi_tiet_don_hangs.id_hoa_don', $request->id)
-                              ->select('dai_lys.ho_va_ten', 'san_phams.ten_san_pham', 'chi_tiet_don_hangs.*')
-                              ->get();
+            ->join('dai_lys', 'dai_lys.id', 'san_phams.id_dai_ly')
+            ->where('chi_tiet_don_hangs.id_hoa_don', $request->id)
+            ->select('dai_lys.ho_va_ten', 'san_phams.ten_san_pham', 'chi_tiet_don_hangs.*')
+            ->get();
 
         return response()->json([
             'data' => $data
@@ -145,8 +145,8 @@ class DonHangController extends Controller
     public function adminChangeThanhToan(Request $request)
     {
         $data = DonHang::where('id', $request->id)->first();
-        if($data){
-            if($request->is_thanh_toan == 0){
+        if ($data) {
+            if ($request->is_thanh_toan == 0) {
                 $data->is_thanh_toan = 1;
                 $data->save();
                 return response()->json([
@@ -165,8 +165,8 @@ class DonHangController extends Controller
     public function adminChangeDonHang(Request $request)
     {
         $data = DonHang::where('id', $request->id)->first();
-        if($data){
-            if($request->tinh_trang_don_hang == 0){
+        if ($data) {
+            if ($request->tinh_trang_don_hang == 0) {
                 $data->tinh_trang_don_hang = 1;
                 $data->save();
                 return response()->json([

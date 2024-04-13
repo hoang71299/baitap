@@ -135,11 +135,11 @@ class NhapKhoController extends Controller
     {
         $dai_ly     = Auth::guard('sanctum')->user();
         $data       = NhapKho::join('san_phams', 'nhap_khos.id_san_pham', 'san_phams.id')
-                             ->where('nhap_khos.id_dai_ly', $dai_ly->id)
-                             ->where('nhap_khos.trang_thai', 1)
-                             ->orderByDESC('nhap_khos.updated_at')
-                             ->select('nhap_khos.*', 'san_phams.ten_san_pham as abcd')
-                             ->get();
+                                ->where('nhap_khos.id_dai_ly', $dai_ly->id)
+                                ->where('nhap_khos.trang_thai', 1)
+                                ->orderByDESC('nhap_khos.updated_at')
+                                ->select('nhap_khos.*', 'san_phams.ten_san_pham as abcd')
+                                ->get();
         return response()->json([
             'data'  => $data,
         ]);
